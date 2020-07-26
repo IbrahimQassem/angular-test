@@ -1,0 +1,61 @@
+<!-- <div class="card">
+    <div class="Toolmargin header_title" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between center" fxFlex.gt-sm="100" fxFlex.xs-sm="100" fxFlex="100">
+        <button (click)="closeDialog()" [style.background-color]="'red'" [style.color]="'white'" [style.margin]="'inherit'" mat-button mat-raised-button mat-icon-button mat-button-sm>
+              <mat-icon>close</mat-icon>
+            </button>
+
+        <div fxLayoutWrap="wrap">
+            {{ action | translate}}
+            <mat-icon class="pl-2"> perm_data_setting</mat-icon>
+        </div>
+
+    </div>
+    <div class="card-body">
+
+        <form role="form" *ngIf="action != 'delete'; else elseTemplate">
+            <div class="form-group row">
+                <div fxFlex.gt-sm="80" fxFlex.xs-sm="80" fxFlex="80">
+                    <input type="text" class="input_font_type form-control" name="L_ARNAME" [(ngModel)]="model.L_ARNAME" placeholder="{{'L_ARNAME'|translate}}">
+                </div>
+                <label class="input_font_type" [style.padding-right]="'12px'" fxFlex.gt-sm="20" fxFlex.xs-sm="20" fxFlex="20"> {{'L_ARNAME'|translate}}&nbsp;<span class="text-danger">*</span></label>
+            </div>
+
+            <div class="form-group row">
+                <div fxFlex.gt-sm="80" fxFlex.xs-sm="80" fxFlex="80">
+                    <input type="text" class="input_font_type form-control" name="L_UNIT" [(ngModel)]="model.L_UNIT" placeholder="{{'L_UNIT'|translate}}">
+                </div>
+                <label class="input_font_type" [style.padding-right]="'12px'" fxFlex.gt-sm="20" fxFlex.xs-sm="20" fxFlex="20">{{'L_UNIT'|translate}}&nbsp;<span class="text-danger">*</span></label>
+            </div>
+
+            <div class="form-group row">
+                <div fxFlex.gt-sm="80" fxFlex.xs-sm="80" fxFlex="80">
+                    <input type="text" class="input_font_type form-control" name="L_VALUE" [(ngModel)]="model.L_VALUE" placeholder="{{'L_VALUE'|translate}}">
+                </div>
+                <label class="input_font_type" [style.padding-right]="'12px'" fxFlex.gt-sm="20" fxFlex.xs-sm="20" fxFlex="20">{{'L_VALUE'|translate}}&nbsp;<span class="text-danger">*</span></label>
+            </div>
+
+
+            <div class="form-group row">
+                <div fxFlex.gt-sm="100" fxFlex.xs-sm="100" fxFlex="100" fxLayoutAlign="space-around center">
+                    <mat-checkbox name="L_ENABLED" [checked]=" model.L_ENABLED" [(ngModel)]="model.L_ENABLED" [style.margin]="'12px'">
+                        <span> {{ 'L_ENABLED' | translate}} </span>
+                    </mat-checkbox>
+                </div>
+            </div>
+
+        </form>
+
+        <ng-template #elseTemplate>
+            <div dir="rtl" class="text-right TableDetil"> <span>{{ 'CONFIRM_DEL' | translate }}</span> &nbsp; <span class="font-weight-bold text-primary">{{model.L_ARNAME}}</span> &nbsp; <span>؟</span></div>
+        </ng-template>
+
+    </div>
+
+    <div class="card-footer">
+        <button mat-button class="shadow text-primary mr-4" [disabled]="loading" (click)="doAction()" color="primary">{{action | translate}}
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          </button>
+        <button mat-button (click)="closeDialog()" mat-flat-button color="warn">{{ 'cancel' | translate}}</button>
+    </div>
+
+</div> -->

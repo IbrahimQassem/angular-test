@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <h4>Signals</h4>
+        </div>
+        <div class="row">
+            <div class="col col-md-6">
+                <!-- <pre> {{ signalList | json }}</pre> -->
+                <span>
+              <p>You can monitor all activities by using this module.</p>
+            </span>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr class="table-primary">
+                        <th scope="col">Index</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Zone</th>
+                        <th scope="col">Signal Date</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="signalList">
+                    <tr *ngFor="let signal of signalList ;let i =index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ signal.customerName }}</td>
+                        <td>{{ signal.description }}</td>
+                        <td>{{ signal.area }}</td>
+                        <td>{{ signal.zone }}</td>
+                        <td>{{ signal.signalDate }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

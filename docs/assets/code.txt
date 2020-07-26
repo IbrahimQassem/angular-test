@@ -1,0 +1,27 @@
+npm install http-server -g
+// projectname: MatTypeaheadLibrary
+ng build <projectname> --prod
+
+ng build <projectname> --prod --watch
+
+
+http-server -p 8000 -c-1 dist/<projectname>
+
+http-server -p 8000 -c-1 dist/MatTypeaheadLibrary
+
+
+
+
+
+In the first terminal, run the build command with --watch:
+ng build home --prod --watch
+Then in the second terminal, serve app the using http-server:
+http-server -p 8000 -c-1 dist/home
+
+wss://s-usc1c-nss-237.firebaseio.com/.ws?v=5&ns=yemensys-abe75
+
+// Signalr
+npm i @aspnet/signalr
+
+https://github.com/IbrahimSharah/angular-test
+ng build --prod --base-href https://IbrahimSharah.github.io/angular-test/ 

@@ -1,0 +1,19 @@
+.mat-tab-label {
+	background: rgb(110, 2, 92);
+	color: rgb(255,255, 255);
+	opacity: 1;
+	align-items: center;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	font-size: 15px;
+	display: flex;
+	justify-content: center;
+}
+.mat-tab-label:hover{ 
+background: rgb(0, 0, 0);
+opacity: 1;
+color:rgb(255, 255, 255);
+}
+.app-dark .mat-tab-label {
+	color: mat-color($dark-foreground, base);
+}

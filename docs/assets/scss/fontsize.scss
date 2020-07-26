@@ -1,0 +1,128 @@
+mat-card,div, input,select,acc-date-picker,dateTime-picker,QAutoComplete,option,h1,h2,h3,h4,h5,input.matInput,span,Aman-input,aman{
+    font-size: $font-size;
+    font-weight: bold;
+    font-family: $mat-font-family;
+    
+  }
+  body .app-dark{
+    .mat-card  {
+     font-family: $mat-font-family;
+     background-color:#424242;
+     color:white;
+   >div{
+    font-family: $mat-font-family;
+    background-color:#424242;
+    color:white;
+   } 
+   >select {
+   
+    color:white!important;
+    &:valid{
+      color:white!important;
+    }
+    &:invalid{
+      color:red!important;
+    }
+    &:focus,&:active{
+     // background:#f5f7b3!important;
+      color:red!important;
+     }
+   }
+  >acc-date-picker,dateTime-picker,QAutoComplete,input[type="string"],input[type="number"],input[type="text"],input,select{ 
+   // font-family: $mat-font-family;
+    background-color:#424242;
+    color:white;
+    
+&:placeholder,&:placHolder,&:hint{
+  color:white!important;
+}
+&+ label{ color:white!important;}
+&:focus,&:active{
+    background:#f5f7b3!important;
+    color:black!important;
+}
+&:disabled{
+  color: #080000!important;
+  background:#e9ecef!important;
+  opacity: 1; 
+}
+  } 
+  
+  }
+}
+  
+   mat-datepicker-toggle{
+    top:0px!important;//position: relative;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content:center;
+    justify-items: baseline;
+    height: 100%;
+    width:25px;
+    padding: 0!important;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin: 0px; 
+    display: -webkit-inline-box!important;;
+   } 
+   .mat-button .mat-button-wrapper>*, .mat-fab .mat-button-wrapper>*, .mat-flat-button .mat-button-wrapper>*, .mat-icon-button .mat-button-wrapper>*, .mat-mini-fab .mat-button-wrapper>*, .mat-raised-button .mat-button-wrapper>*, .mat-stroked-button .mat-button-wrapper>* {
+    vertical-align: middle!important;
+}
+mat-datepicker-toggle button.mat-icon-button{
+  padding-left:0.5px ;padding-top:0.5px ;
+  min-width: 0;
+  width: 100%;
+  height: 100%!important;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content:center;
+  justify-items: center;   
+  flex-shrink:0;
+  line-height: 100%!important;
+  border-radius: 50%;
+
+}
+mat-datepicker-toggle-default-icon ng-star-inserted{
+  vertical-align:middle!important;
+  height: 100%;
+}
+mat-datepicker-toggle button {
+  height: 100%;
+}
+mat-datepicker-toggle button.mat-icon-button span.mat-button-wrapper{
+  height: 100%!important;
+  width: 100%;
+}
+mat-datepicker-toggle button span svg{
+//  vertical-align: top;
+  height: 100%;
+  width: 100%;
+}
+
+div mat-datepicker-toggle{
+  top:0px!important;//position: relative;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content:center;
+  justify-items: baseline;
+  height: 100%;
+  width: 25px;
+  padding: 0!important;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin: 0px; 
+  display:-webkit-inline-box!important;;
+ }
+ div mat-datepicker{
+  vertical-align: top!important;
+  min-height: 0px;
+  min-width: 0px;
+  margin: 0px;
+  display: -webkit-inline-flex!important;
+  top: 0px;
+//        position: relative;
+ }
+.centerItem{
+  align-items: center;
+}

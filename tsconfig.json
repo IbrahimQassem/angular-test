@@ -17,7 +17,21 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-mat-typeahead": [
+        "dist/ngx-mat-typeahead/ngx-mat-typeahead",
+        "dist/ngx-mat-typeahead"
+      ],
+      "ng7-common": [
+        "dist/ng7-common/ng7-common",
+        "dist/ng7-common"
+      ],
+      "iq-lib": [
+        "dist/iq-lib/iq-lib",
+        "dist/iq-lib"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

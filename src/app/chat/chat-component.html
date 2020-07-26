@@ -1,0 +1,116 @@
+<div fxLayout="row" fxLayoutAlign="start" class="gene-chat-page">
+    <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex="100">
+        <mat-card class="mat-pad-none">
+            <mat-sidenav-container class="chat-content-area">
+                <mat-sidenav #chatnavbar [mode]="isOver() ? 'over' : 'side'" [opened]="!isOver()" class="gene-chat-sidebar">
+                    <mat-toolbar class="mat-blue-600 chat-toolbar-side">
+                        <a> <img width="50" class="img-circle" src="assets/img/person.png"> </a> <span fxFlex></span>
+                        <button [mat-menu-trigger-for]="user" mat-icon-button>
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                    </mat-toolbar>
+                    <hr>
+                    <mat-nav-list class="gene-chat-user">
+                        <mat-list-item (click)="onSelect(user)" *ngFor="let user of users">
+                            <div class="gene-chat-thumb"><img class="img-circle" mat-list-avatar src="{{user.imgProfile}}" alt=""> </div>
+                            <!-- <div class="gene-chat-thumb"><img class="img-circle" mat-list-avatar src="assets/img/person.png" alt=""></div> -->
+                            <div class="gene-user-info pad-wrap"> <span> {{user.nickname}} </span>
+                                <p mat-line> <span class="circle" [ngStyle]="{'color': user.status == 'online'? 'lightgreen' : 'red'}"></span> {{user.status}} </p>
+                            </div>
+                        </mat-list-item>
+                    </mat-nav-list>
+                </mat-sidenav>
+                <mat-toolbar class="chat-toolbar mat-blue-600">
+                    <button (click)="chatnavbar.toggle()" mat-icon-button>
+                        <mat-icon>short_text</mat-icon>
+                    </button>
+                    <a> <img width="50" class="img-circle" src="{{selectedChat?.imgProfile}}"> </a>
+                    <div fxFlex class="pad-wrap">
+                        <h5 class="margin-none ">{{selectedChat?.nickname}}</h5>
+                        <div *ngIf="selectedChat?.userId">
+                            <h6 class="margin-none"> last seen {{selectedChat?.timeLoged}}</h6>
+                            <p mat-line> <span class="circle" [ngStyle]="{'color': selectedChat?.status == 'online'? 'lightgreen' : 'red'}"></span> {{selectedChat.status}} </p>
+                        </div>
+
+                    </div>
+                    <button mat-icon-button>
+                        <mat-icon>attach_file</mat-icon>
+                    </button>
+                    <button [mat-menu-trigger-for]="them" mat-icon-button>
+                        <mat-icon>more_horiz</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <div class="gene-chat-area " fxLayout="column" fxLayoutAlign="end stretch">
+                    <perfect-scrollbar [style.height]="'400px'">
+                        <!-- <perfect-scrollbar  #chatcontent [scrollTop]="scrolltop"> -->
+                        <!-- <pre> {{ selectedChat?.nickname +"- " + nickname | json }}</pre> -->
+                        <!-- <pre> {{ chats | json }}</pre> -->
+                        <!-- <pre> {{ selectedChat | json }}</pre> -->
+                        <div class="gene-chat-content" #chatcontent [scrollTop]="scrolltop">
+                            <div class="gene-chat-wrap" *ngFor="let chat of chats" [ngSwitch]="chat.from" fxLayout="column">
+                                <div class="gene-chat-list mat-blue-800" *ngSwitchCase="nickname" fxLayout="row" fxLayoutAlign="start start" class="mrgn-b-md">
+                                    <div><img width="50" class="img-circle" [src]="selectedChat.imgProfile"></div>
+                                    <div class="pad-wrap">
+                                        <div class="mat-blue-800 gene-chat-msg"><span class="gene-block">
+                                                {{chat?.from}} 
+                                                 </span><span>{{ chat?.message }}</span></div>
+                                        <div> <span class="meta-post gene-text-md">{{chat?.timeSent}}</span> </div>
+                                    </div> <span fxFlex></span>
+
+                                </div>
+
+                                <div class="gene-chat-list mat-green" *ngSwitchCase="selectedChat?.nickname" fxLayout="row" fxLayoutAlign="start start" class="mrgn-b-md"> <span fxFlex></span>
+                                    <div class="pad-wrap">
+                                        <div class="mat-green gene-chat-msg"><span class="gene-block"> {{ chat?.from }} 
+                                            </span><span>{{ chat?.message }}</span></div>
+                                        <div> <span class="meta-post  sp-l  gene-text-md">{{chat?.timeSent}}</span> </div>
+
+                                    </div>
+                                    <div><img width="50" class="img-circle" src="assets/img/person.png"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </perfect-scrollbar>
+                    <div class="gene-chat-form">
+                        <div fxLayout="row" fxLayoutAlign="space-around center">
+                            <button mat-fab (click)="send()" class="gene-send-btn mat-blue-800">
+                                <mat-icon>send</mat-icon>
+                            </button>
+                            <!-- <mat-form-field class="gene-send-text"> -->
+                            <input (keyup.enter)="send()" [(ngModel)]="newMessage" placeholder="Send message">
+                            <!-- </mat-form-field> -->
+
+                        </div>
+                    </div>
+                </div>
+            </mat-sidenav-container>
+        </mat-card>
+    </div>
+</div>
+<mat-menu #user="matMenu">
+    <button mat-menu-item (click)="login()">
+        <mat-icon> account_circle </mat-icon> <span>   {{ nickname || "Login" }}  </span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon> settings </mat-icon> <span> Settings </span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>help</mat-icon> <span>Help</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+        <mat-icon> exit_to_app </mat-icon> <span> Logout </span>
+    </button>
+</mat-menu>
+<mat-menu #them="matMenu">
+    <button mat-menu-item>
+        <mat-icon> account_circle </mat-icon> <span> Contact Info </span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon> volume_mute </mat-icon> <span> Mute Chat </span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="clearMessages()">
+        <mat-icon> clear_all </mat-icon> <span> Clear Messages </span>
+    </button>
+</mat-menu>

@@ -1,0 +1,19 @@
+body {
+  .mat-select-panel {
+    background-color: mat-color($background, card);
+  }
+  .mat-select-trigger{
+  //  font-size: $font-size-base;
+     font-size: 10px;
+  }
+  .mat-select-trigger {
+    height: 20px;
+  }
+  .mat-select-placeholder {
+    opacity: 0;
+    padding-left: 0;
+  }
+  .app-dark .mat-select-panel {
+    background-color: mat-color($dark-background, card);
+  }
+}

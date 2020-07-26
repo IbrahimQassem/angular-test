@@ -1,0 +1,24 @@
+.gene-chat-list {
+    display: block !important;
+}
+
+.gene-chat-wrap {
+    display: block !important;
+}
+
+.sp-l {
+    text-align: left !important;
+}
+
+
+/* .margin-none {
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: 100 !important;
+} */
+
+.circle:before {
+    content: ' \25CF';
+    font-size: 10px;
+    /* color: lightgreen; */
+}

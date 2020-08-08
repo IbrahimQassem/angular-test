@@ -21,6 +21,7 @@ import { ChatSigrComponent } from './signalr/chat-sigr/chat-sigr.component';
 import { UploadFileComponent } from './signalr/chat-sigr/upload-file/upload-file.component';
 import { DragDropDirective } from './signalr/chat-sigr/upload-file/drag-drop.directive';
  import { DynamicMediaComponent } from './signalr/chat-sigr/dynamic-media/dynamic-media.component';
+import { LockscreenComponent } from './lockscreen/lockscreen.component';
  
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { DragDropDirective } from './signalr/chat-sigr/upload-file/drag-drop.dir
      UploadFileComponent,
      DragDropDirective,
      DynamicMediaComponent,
+     LockscreenComponent,
    ],
   imports: [
     BrowserModule,

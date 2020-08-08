@@ -17,6 +17,7 @@ export class USER_TABLE {
   USER_ARNAME?: string = null;
   USER_ENNAME?: string = null;
   USER_UNIQNAME?: string = null;
+  USER_PASS?: string = null;
   USER_ISONLINE?: boolean = null;
   USER_ISENABLE?: boolean = null;
   USER_EMAIL?: string = null;

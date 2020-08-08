@@ -1,11 +1,11 @@
 <div class="login">
     <div class="login-triangle"></div>
 
-    <h2 class="login-header">حساب المستخدم</h2>
+    <h2 class="login-header">Log in</h2>
 
     <form class="login-container" [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
         <p><input type="text" placeholder="إسم المستخدم" formControlName="USER_UNIQNAME" name="USER_UNIQNAME"></p>
-        <p><input type="password" autocomplete="on" placeholder="كلمة المرور" formControlName="USER_PASS" name="USER_PASS"></p>
-        <p><input type="submit" value="تسجيل الدخول"></p>
+        <p><input type="password" placeholder="كلمة المرور" formControlName="USER_PASS" name="USER_PASS"></p>
+        <p><input type="submit" [disabled]="!loginForm.valid" value="تسجيل"></p>
     </form>
 </div>

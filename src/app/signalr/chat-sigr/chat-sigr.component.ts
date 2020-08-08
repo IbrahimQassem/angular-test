@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver , ComponentRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { MS_CHAT, USER_TABLE, MSG_TYPE } from './chat-models';
 import { ChatSignRService, apiUrl } from './chat-signr.service';
 import { Router } from '@angular/router';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
-import { HttpEventType, HttpRequest, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpEventType, HttpRequest, HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DynamicMediaComponent } from './dynamic-media/dynamic-media.component';
- 
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs/internal/observable/of';
+
 declare var require: any
 const FileSaver = require('file-saver');
 
@@ -18,7 +20,7 @@ const FileSaver = require('file-saver');
 export class ChatSigrComponent implements OnInit {
 
   url: string = apiUrl();
-      
+
   users: USER_TABLE[] = [
     // {
     //   USER_ID: 1,
@@ -42,12 +44,14 @@ export class ChatSigrComponent implements OnInit {
 
   selectedChat: USER_TABLE;
 
-  defoultUS: USER_TABLE = {
-    USER_ID: 1,
-    USER_UNIQNAME: 'المستخدم الإفتراضي',
-    USER_IMG: 'https://picsum.photos/200/300?grayscale',
-    USER_ISONLINE: true
-  }
+  defoultUS: USER_TABLE = new USER_TABLE(
+    // {
+    //   USER_ID: 1,
+    //   USER_UNIQNAME: 'المستخدم الإفتراضي',
+    //   USER_IMG: 'https://picsum.photos/200/300?grayscale',
+    //   USER_ISONLINE: true
+    // }
+  );
   newMessage: string;
 
   model: Array<MS_CHAT> = new Array();
@@ -60,22 +64,29 @@ export class ChatSigrComponent implements OnInit {
 
 
   constructor(private chatRService: ChatSignRService, private router: Router, private http: HttpClient, private resolver: ComponentFactoryResolver) {
-    this.chatRService.Query('api/v1/userlist/user').subscribe((data: any[]) => {
-      debugger
-      this.users = [];
-      this.users = data;
-      let id: number = this.defoultUS.USER_ID;
-      this.users = this.users.filter(x => x.USER_ID !== id);
-    });
 
-   }
+    this.defoultUS = JSON.parse(localStorage.getItem('user'));
+    if (!this.defoultUS) {
+      this.router.navigate(['/login']);
+      return;
+    } else {
+      this.chatRService.Query('api/v1/userlist/user').subscribe((data: any[]) => {
+        this.users = [];
+        this.users = data;
+        let id: number = this.defoultUS.USER_ID;
+        this.users = this.users.filter(x => x.USER_ID !== id);
+      });
+    }
+
+
+
+  }
 
 
 
   ngOnInit(): void {
     this.chats = [];
     this.chatRService.chatReceived.subscribe((signal: MS_CHAT) => {
-      debugger
       this.scrollToBottom();
       this.chats.push(signal);
     });
@@ -99,7 +110,7 @@ export class ChatSigrComponent implements OnInit {
     }
 
     this.selectedChat = chat;
-
+    this.fileList = [];
     if (!this.defoultUS.USER_ID && !this.selectedChat.USER_ID) {
       alert("رقم المستخدم أو رقم الستقبل غير موجود !")
       return;
@@ -107,7 +118,6 @@ export class ChatSigrComponent implements OnInit {
 
     let query = `api/v1/chat/MS_CHATWITH?FUSER_ID=${+this.defoultUS.USER_ID}&TUSER_ID=${+this.selectedChat.USER_ID}`;
     this.chatRService.Query(query).subscribe((data: any[]) => {
-      debugger
       this.chats = data;
     })
 
@@ -116,8 +126,6 @@ export class ChatSigrComponent implements OnInit {
 
 
   async send() {
-    debugger
-
     if (!this.selectedChat) {
       alert("يجب تحديد المستلم !");
       return false;
@@ -157,17 +165,39 @@ export class ChatSigrComponent implements OnInit {
 
 
   logout(): void {
-    localStorage.removeItem('defoultUS');
+    localStorage.removeItem('user');
     this.router.navigate(['']);
   }
 
   login(): void {
-    this.router.navigate(['']);
+    // this.router.navigate(['']);
+  }
+
+  // Mute a singular HTML5 element
+  muteMe(elem) {
+    elem.muted = true;
+    elem.pause();
+  }
+
+  // Try to mute all video and audio elements on the page
+  mutePage() {
+    document.querySelectorAll("video, audio").forEach(elem => this.muteMe(elem));
+  }
+  mute(): void {
+
+    Array.prototype.slice.call(document.querySelectorAll("video, audio")).forEach(function (audio) {
+      audio.pause();
+      audio.muted = true;
+    });
+
+    // let audios = [document.getElementsByTagName('audio')];
+    // audios.forEach(audio => audio.volume = 0.5) // lower volume 50%.
+    // var elems = document.querySelectorAll("video, audio");
+    // [].forEach.call(elems, function(elem) { this.muteMe(elem); });
   }
 
   clearMessages() {
-    debugger
-    if (this.selectedChat === undefined) {
+     if (this.selectedChat === undefined) {
       alert("لم يتم تحديد المحادثة !")
       return false;
     }
@@ -194,8 +224,7 @@ export class ChatSigrComponent implements OnInit {
   chatList: MS_CHAT[] = [];
   formData = new FormData();
   onSelectFile($event, file) {
-    debugger
-    this.fileList = file;
+     this.fileList = file;
     if (this.fileList.length > 0) {
       const file = this.fileList[0];
       /* Get File Extansion */
@@ -227,8 +256,6 @@ export class ChatSigrComponent implements OnInit {
 
 
   sendFileChat() {
-
-    debugger
     if (this.fileList.length === 0) {
       return;
     }
@@ -247,15 +274,35 @@ export class ChatSigrComponent implements OnInit {
       reportProgress: true,
     });
 
-    this.http.request(uploadReq).subscribe((event: any) => {
-      debugger
-      if (event.ok) {
-        this.fileList = [];
-        alert("تم الإرسال بنجاح .");
-        return false;
-      }
+    this.chatRService.upload('api/v1/chat/MS_FILE', formData).pipe(
+      map(event => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            // file.progress = Math.round(event.loaded * 100 / event.total);
+            break;
+          case HttpEventType.Response:
+            return event;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // file.inProgress = false;
+        let file;
+        return of(`Upload failed: ${file}`);
+      })).subscribe((event: any) => {
+        if (typeof (event) === 'object') {
+          // console.log(event.body);
+          this.fileList = [];
+          alert("تم الإرسال بنجاح .");
+        }
+      });
 
-    });
+    // this.http.request(uploadReq).subscribe((event: any) => {
+     //   if (event.ok) {
+    //     this.fileList = [];
+    //     alert("تم الإرسال بنجاح .");
+    //    }
+    // });
+
   }
 
 

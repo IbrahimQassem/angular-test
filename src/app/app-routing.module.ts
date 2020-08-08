@@ -8,18 +8,41 @@ import { ChatComponent } from './chat/chat.component';
 import { SqlsignalrComponent } from './signalr/sqlsignalr/sqlsignalr.component';
 import { ChatSigrComponent } from './signalr/chat-sigr/chat-sigr.component';
 import { ClintsignrComponent } from './signalr/clintsignr/clintsignr.component';
+import { LockscreenComponent } from './lockscreen/lockscreen.component';
 
+ 
 
+const routesX: Routes = [{
+  path: '',
+  component: LoginComponent,
+  children: [
+   {
+      path: '',
+      redirectTo: 'login',
+      pathMatch: 'prefix'
+   },
+   {
+      path: 'login',
+      component: LoginComponent
+   }
+   ,
+   {
+      path: 'chat',
+      component: ChatSigrComponent
+   }
+ ]
+}];
 
 const routes: Routes = [
-  { path: 'chat', component: ChatComponent },
-  { path: 'sql', component: SqlsignalrComponent },
-  { path: 'chatsql', component: ChatSigrComponent },
-  { path: 'clint', component: ClintsignrComponent },
+  // { path: 'chat', component: ChatComponent },
+  // { path: 'sql', component: SqlsignalrComponent },
+  { path: 'chat', component: ChatSigrComponent },
+  // { path: 'clint', component: ClintsignrComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'roomlist', component: RoomlistComponent },
-  { path: 'addroom', component: AddroomComponent },
-  { path: 'chatroom/:roomname', component: ChatroomComponent },
+  // { path: 'roomlist', component: RoomlistComponent },
+  // { path: 'addroom', component: AddroomComponent },
+  // { path: 'chatroom/:roomname', component: ChatroomComponent },
+  // {	path: 'lockscreen',  component: LockscreenComponent,},
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'

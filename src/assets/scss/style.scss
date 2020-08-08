@@ -7,12 +7,14 @@
 @import "core";
 @import "material";
 @import "components";
-
 @import "utilities/utilities";
-
 @import "acc_style";
 //@import "./Data_Gird_style.scss";
 @import './bootstrap.min.scss';
 @import './fontsize.scss';
 //@import 'theme';
 //@import '../css/primeng.css';
+body {
+    background: #1e88e599;
+    font-family: 'Open Sans', sans-serif;
+}

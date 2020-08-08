@@ -7,7 +7,7 @@
                     <mat-toolbar class="mat-blue-600 chat-toolbar-side">
                         <div>
                             <a>
-                                <img class="img-circle" [src]="defoultUS?.USER_IMG!= null ? defoultUS?.USER_IMG : 'assets/img/noavatar.png'">
+                                <img class="img-circle" [src]="defoultUS?.USER_IMG!= null ? url+defoultUS?.USER_IMG : 'assets/img/noavatar.png'">
                             </a>
                         </div>
                         <span fxFlex></span>
@@ -18,7 +18,7 @@
                     <hr>
                     <mat-nav-list class="gene-chat-user">
                         <mat-list-item (click)="onSelect(user)" *ngFor="let user of users">
-                            <div class="gene-chat-thumb"><img class="img-circle" mat-list-avatar src="{{user.USER_IMG}}" alt=""> </div>
+                            <div class="gene-chat-thumb"><img class="img-circle" mat-list-avatar src="{{url+user.USER_IMG}}" alt=""> </div>
                             <div class="gene-user-info pad-wrap"> <span> {{user.USER_UNIQNAME}} </span>
                                 <p mat-line> <span class="circle" [ngStyle]="{'color': user.USER_ISONLINE == true ? 'lightgreen' : 'red'}"></span>
                                     <span *ngIf="user.USER_ISONLINE == true;">
@@ -36,7 +36,8 @@
                     <button (click)="chatnavbar.toggle()" mat-icon-button>
                         <mat-icon>short_text</mat-icon>
                     </button>
-                    <a> <img class="img-circle" [src]="selectedChat?.USER_IMG!= null ? selectedChat?.USER_IMG : 'assets/img/noavatar.png'">
+                    <a>
+                        <img class="img-circle" [src]="selectedChat?.USER_IMG!= null ? url+ selectedChat.USER_IMG : 'assets/img/noavatar.png'">
                     </a>
 
                     <div fxFlex class="pad-wrap">
@@ -46,7 +47,7 @@
                                 <p mat-line class="margin-none small-tx"> <span class="circle" [ngStyle]="{'color': selectedChat?.USER_ISONLINE == true? 'lightgreen' : 'red'}"></span> online </p>
                             </div>
                             <ng-template #toggle_view>
-                                <p class="margin-none small-tx"> آخر ظهور : {{selectedChat?.USER_LASTSEEN | date:'yyyy/MM/dd hh:mm'}}</p>
+                                <p class="margin-none small-tx"> آخر ظهور : {{selectedChat?.USER_LASTSEEN | date:'dd/MM/yyyy h:mm a'}}</p>
                             </ng-template>
                         </div>
 
@@ -79,7 +80,7 @@
                                 <div class="gene-chat-wrap" *ngFor="let chat of chats" fxLayout="column">
 
                                     <div class="gene-chat-list mat-blue-800" *ngIf="chat.FUSER_ID == defoultUS?.USER_ID;else other_user" fxLayout="row" fxLayoutAlign="start start" class="mrgn-b-md">
-                                        <div><img class="img-circle" [src]="defoultUS?.USER_IMG"></div>
+                                        <div><img class="img-circle" [src]="url+defoultUS?.USER_IMG"></div>
                                         <div class="pad-wrap">
                                             <div class="mat-blue-800 gene-chat-msg">
                                                 <span class="gene-block">
@@ -87,7 +88,10 @@
                                                 </span>
                                                 <dynamicMedia [url]="url" [chat]="chat"> </dynamicMedia>
                                             </div>
-                                            <div> <span class="meta-post gene-text-md">{{chat?.MS_DATE}}</span> </div>
+                                            <div> <span class="meta-post gene-text-md">
+                                                <!-- {{chat?.MS_DATE}} -->
+                                                {{chat?.MS_DATE | date:'dd/MM/yyyy h:mm a'}}
+                                            </span> </div>
                                         </div> <span fxFlex></span>
                                     </div>
 
@@ -100,10 +104,10 @@
                                                     </span>
                                                     <dynamicMedia [url]="url" [chat]="chat"> </dynamicMedia>
                                                 </div>
-                                                <div> <span class="meta-post  sp-l  gene-text-md">{{chat?.MS_DATE}}</span>
+                                                <div> <span class="meta-post  sp-l  gene-text-md"> {{chat?.MS_DATE | date:'dd/MM/yyyy h:mm a'}}</span>
                                                 </div>
                                             </div>
-                                            <div><img class="img-circle" [src]="selectedChat?.USER_IMG"></div>
+                                            <div><img class="img-circle" [src]="url+selectedChat?.USER_IMG"></div>
                                         </div>
                                     </ng-template>
                                 </div>
@@ -160,10 +164,10 @@
 </mat-menu>
 <mat-menu #them="matMenu">
     <button mat-menu-item>
-        <mat-icon> account_circle </mat-icon> <span> حساب المستخدم </span>
+        <mat-icon> account_circle </mat-icon> <span> {{selectedChat?.USER_UNIQNAME}} </span>
     </button>
-    <button mat-menu-item>
-        <mat-icon> volume_mute </mat-icon> <span> كتم المحادثة </span>
+    <button mat-menu-item (click)="mute()">
+        <mat-icon> volume_mute </mat-icon> <span> كتم الصوت </span>
     </button>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="clearMessages()">

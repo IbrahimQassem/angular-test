@@ -11,13 +11,18 @@
     </div>
     <div *ngSwitchCase="msgType.VIDEO">
         <div class="video">
-            <video width="320" height="240" controls preload="metadata" #myVideo>
+            <video width="320" height="240" controls preload="metadata" #videoEl (click)="toggleVideo()">
                     <source [src]="url+chat.MS_TEXT" type="video/mp4" />
                     Your browser does not support the video element.
                 </video>
             <!-- <button mat-fab (click)="playVideo()" class="gene-send-btn mat-blue-800">
                     <mat-icon>play_circle_outline</mat-icon>
                 </button> -->
+        </div>
+        <div class="controls">
+            <button (click)="playPause()">Play/Pause</button>
+            <button type="button" (click)="onPlay()">Play</button>
+            <button type="button" (click)="onPause()">Pause</button>
         </div>
     </div>
 

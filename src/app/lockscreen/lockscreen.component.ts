@@ -1,24 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { DatePipe } from '@angular/common';
-import { ChatSignRService, apiUrl } from '../signalr/chat-sigr/chat-signr.service';
+import {Router} from "@angular/router";
 import { USER_TABLE } from '../signalr/chat-sigr/chat-models';
+ import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { ChatSignRService } from '../signalr/chat-sigr/chat-signr.service';
+import { MyErrorStateMatcher } from '../login/login.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'mat-ta-lockscreen',
+  templateUrl: './lockscreen.component.html',
+  styleUrls: ['./lockscreen.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LockscreenComponent implements OnInit {
+  
   loginForm: FormGroup;
   matcher = new MyErrorStateMatcher();
 
@@ -35,6 +30,7 @@ export class LoginComponent implements OnInit {
 
   onFormSubmit(form: any) {
     //const clone = JSON.parse(JSON.stringify(form));
+    debugger
     let model: USER_TABLE = new USER_TABLE();
     model.USER_UNIQNAME =  form.USER_UNIQNAME;
     model.USER_PASS = form.USER_PASS;
@@ -53,5 +49,4 @@ export class LoginComponent implements OnInit {
     });
 
   }
-
 }

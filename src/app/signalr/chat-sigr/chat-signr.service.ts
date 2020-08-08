@@ -5,7 +5,7 @@ import { MS_CHAT, USER_TABLE } from './chat-models';
 import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
- 
+
 @Injectable({
   providedIn: "root"
 })
@@ -17,7 +17,6 @@ export class ChatSignRService {
   usersState = new EventEmitter<USER_TABLE>();
 
   constructor(private http: HttpClient) {
-    debugger
     this.buildConnection();
     this.startConnection();
 
@@ -28,12 +27,11 @@ export class ChatSignRService {
 
   private buildConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(apiUrl()+"ms_chat_hub") 
+      .withUrl(apiUrl() + "ms_chat_hub")
       .build();
   };
 
   private startConnection = () => {
-    debugger
     this.hubConnection
       .start()
       .then(() => {
@@ -54,24 +52,21 @@ export class ChatSignRService {
 
   // Users Real Time Events
   private buildUserConnection = () => {
-    debugger
     this.userhubConnect = new signalR.HubConnectionBuilder()
-      .withUrl(apiUrl()+"user_hub") 
+      .withUrl(apiUrl() + "user_hub")
       .build();
   };
 
   private startUsersConnection = () => {
-    debugger
     this.userhubConnect.start().then(() => {
       //  console.log("Connection Started...");
       this.registerUsersEvents();
     }).catch(err => {
       console.log("Error while starting connection Signal R: " + err);
-     });
+    });
   };
 
   private registerUsersEvents() {
-    debugger
     this.userhubConnect.on("USER_TABLEStateus", (data: any) => {
       this.usersState.emit(data);
     });
@@ -80,13 +75,13 @@ export class ChatSignRService {
   /* End Signal R */
 
   public initSignRChat() {
-    return this.http.get(apiUrl()+"api/v1/chat/MS_CHAT");
-   }
+    return this.http.get(apiUrl() + "api/v1/chat/MS_CHAT");
+  }
 
 
   Query(table: string): Observable<any> {
-     const url1 = apiUrl() + `${table}`;
-     return this.http.get<any>(url1)
+    const url1 = apiUrl() + `${table}`;
+    return this.http.get<any>(url1)
       .pipe(res => { var obj_no = res; return obj_no; });
   }
 
@@ -100,28 +95,33 @@ export class ChatSignRService {
   }
 
   DeleteQuery(path, key): Observable<any> {
-    debugger
     let __url = apiUrl() + path;
-    const url = `${__url+key}`;
+    const url = `${__url + key}`;
     return this.http.delete(url).pipe(
       // catchError(this.error)
     )
   }
-/*  upload to server */
+  /*  upload to server */
 
- 
- 
-  
+    upload(path, formData) {
+    let API_URL = `${apiUrl() + path} `;
+    return this.http.post<any>(API_URL, formData, {
+      reportProgress: true,
+      observe: 'events'
+    });
+
+  }
+
+
 }
 
-const Ip = 'http://localhost:5000/'; // 'http://vmi210615.contaboserver.net:9095/';
-// const Ip = 'http://ibrahimqassiem-001-site1.itempurl.com/AlshamelSignalr/';
+// const Ip = 'http://localhost:5000/'; 
+// const Ip = 'http://192.168.1.103:8009/';
+const Ip = 'http://ibrahimqassiem-001-site1.itempurl.com/AlshamelSignalr/';
 
 export function apiUrl(): string {
   if (environment.production)
-    return  Ip;//'http://ibrahimqassiem-001-site1.itempurl.com/AlshamelSignalr/';//'http://192.168.1.108:8009/';
+    return Ip;
   return Ip;
-  // return  'http://ibrahimqassiem-001-site1.itempurl.com/AlshamelSignalr/';//'http://ibrahimqassiem-001-site1.itempurl.com/AlshamelSignalr/'; //'http://192.168.1.108:8009/';
- }
+}
 
- 

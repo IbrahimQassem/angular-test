@@ -24,6 +24,7 @@ ng build --watch
 
   lite-server --baseDir="dist/MatTypeaheadLibrary"
 ng deploy --base-href=/angular-test/
+ng build --prod=true --outputPath=docs --baseHref=/angular-test/
 
 	ng build --prod=true --outputPath=docs --baseHref=/MatTypeaheadLibrary/
       git push --all --set-upstream

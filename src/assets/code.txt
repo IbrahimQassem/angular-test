@@ -20,6 +20,10 @@ http-server -p 8000 -c-1 dist/home
 
 wss://s-usc1c-nss-237.firebaseio.com/.ws?v=5&ns=yemensys-abe75
 
+ng build --watch
+
+  lite-server --baseDir="dist/MatTypeaheadLibrary"
+
 	ng build --prod=true --outputPath=docs --baseHref=/MatTypeaheadLibrary/
       git push --all --set-upstream
 

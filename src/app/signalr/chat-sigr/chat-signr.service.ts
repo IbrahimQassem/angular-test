@@ -115,9 +115,9 @@ export class ChatSignRService {
 
 }
 
-// const Ip = 'http://localhost:5000/'; 
+const Ip = 'http://localhost:5000/'; 
 // const Ip = 'http://192.168.1.103:8009/';
-const Ip = 'http://ibrahimqassiem-001-site1.itempurl.com/AlshamelSignalr/';
+// const Ip = 'http://ibrahimqassiem-001-site1.itempurl.com/AlshamelSignalr/';
 
 export function apiUrl(): string {
   if (environment.production)
